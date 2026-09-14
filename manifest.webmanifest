@@ -1,0 +1,18 @@
+{
+  "name": "Kremityss Live",
+  "short_name": "Kremityss",
+  "description": "Kremityss live geospatial intelligence and public video feeds.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#07040f",
+  "theme_color": "#9b4dff",
+  "orientation": "any",
+  "icons": [
+    {
+      "src": "/kremityss-logo.jpg",
+      "sizes": "800x800",
+      "type": "image/jpeg",
+      "purpose": "any maskable"
+    }
+  ]
+}

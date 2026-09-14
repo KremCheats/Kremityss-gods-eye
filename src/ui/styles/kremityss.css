@@ -1,0 +1,111 @@
+/* Kremityss brand layer: keep the original GEV mechanics intact while making
+   the product feel like a focused, installable mobile experience. */
+:root {
+  --krem-bg: #07040f;
+  --krem-surface: rgba(15, 8, 30, 0.92);
+  --krem-purple: #a855f7;
+  --krem-violet: #7c3aed;
+  --krem-pink: #f0abfc;
+  --krem-text: #f7efff;
+  --krem-muted: #bca9d5;
+}
+
+body {
+  background: var(--krem-bg);
+  color: var(--krem-text);
+  -webkit-tap-highlight-color: rgba(168, 85, 247, 0.22);
+}
+
+#title-bar h1 {
+  color: var(--krem-text);
+  text-shadow: 0 0 20px rgba(168, 85, 247, 0.42);
+}
+
+#title-bar .title-accent {
+  color: var(--krem-pink);
+}
+
+#title-bar .subtitle {
+  color: var(--krem-muted);
+  letter-spacing: 0.22em;
+}
+
+#title-bar .title-logo {
+  border-color: rgba(168, 85, 247, 0.66);
+  box-shadow: 0 0 22px rgba(168, 85, 247, 0.32);
+  overflow: hidden;
+}
+
+#title-bar .title-logo img {
+  width: 100%;
+  height: 100%;
+  display: block;
+  object-fit: cover;
+}
+
+button,
+select,
+input,
+[role='button'] {
+  touch-action: manipulation;
+}
+
+/* Video cards should read as video-first even when a source is temporarily
+   unavailable. The source adapter still decides whether the feed is HLS,
+   WebRTC, MP4, or a legacy snapshot. */
+.cctv-frame-wrap[data-media-kind='video'] {
+  border-color: rgba(168, 85, 247, 0.56);
+  box-shadow: inset 0 0 24px rgba(124, 58, 237, 0.16);
+}
+
+@media (max-width: 720px) {
+  body {
+    overscroll-behavior: none;
+  }
+
+  #title-bar {
+    left: 14px;
+    top: max(14px, env(safe-area-inset-top));
+  }
+
+  #title-bar h1 {
+    font-size: 15px;
+    letter-spacing: 2.6px;
+  }
+
+  #title-bar .subtitle {
+    font-size: 8px;
+    letter-spacing: 0.14em;
+  }
+
+  #title-bar .title-logo {
+    width: 34px;
+    height: 34px;
+  }
+
+  #cctv-panel,
+  #data-panel,
+  #scene-panel,
+  #global-context-panel,
+  #radio-panel {
+    border-color: rgba(168, 85, 247, 0.34);
+    background: linear-gradient(180deg, rgba(18, 9, 34, 0.96), rgba(8, 5, 16, 0.96));
+    box-shadow: 0 14px 44px rgba(0, 0, 0, 0.42), 0 0 28px rgba(124, 58, 237, 0.12);
+    backdrop-filter: blur(18px);
+  }
+
+  #cctv-frame,
+  #cctv-video,
+  .cctv-frame-wrap video,
+  .cctv-frame-wrap img {
+    max-height: 34vh;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.001ms !important;
+    transition-duration: 0.001ms !important;
+    scroll-behavior: auto !important;
+  }
+}

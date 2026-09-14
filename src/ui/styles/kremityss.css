@@ -162,3 +162,48 @@ button:active { transform: scale(0.97); }
 .auth-footnote { margin-top: 18px; color: var(--text-dim); font: 10px/1.5 var(--font-mono); }
 .auth-orientation-note { position: fixed; top: max(16px, env(safe-area-inset-top)); left: 50%; display: none; transform: translateX(-50%); color: var(--text-dim); font: 10px var(--font-mono); white-space: nowrap; }
 @media (orientation: portrait) and (max-width: 900px) { .auth-orientation-note { display: block; } }
+
+/* iPhone/iPad landscape: the screenshot viewport is extremely wide but shallow.
+   Reserve deliberate horizontal bands so telemetry never sits under panels. */
+@media (orientation: landscape) and (max-height: 680px) {
+  #title-bar { top: 14px; left: 22px; max-width: min(43vw, 520px); }
+  #title-bar h1 { gap: 9px; font-size: clamp(17px, 2.1vw, 23px); letter-spacing: 4px; white-space: nowrap; }
+  #title-bar .title-logo { width: 42px; }
+  #title-bar .title-accent { display: inline-block; }
+  #title-bar .subtitle { max-width: 420px; margin-top: 5px; font-size: 8px; letter-spacing: 2px; line-height: 1.35; }
+  #style-indicator { top: 16px; right: 24px; }
+  #style-indicator .indicator-label { font-size: 8px; letter-spacing: 2px; }
+  #style-indicator .indicator-value { margin-top: 2px; font-size: 14px; letter-spacing: 4px; }
+  #top-center-actions { top: 12px; right: 50%; transform: translateX(50%); gap: 8px; }
+  #top-center-actions button { width: 48px; height: 48px; }
+
+  /* The live telemetry text is decorative at this height; hide it rather than
+     allowing it to render through interactive cards and become unreadable. */
+  #intel-hud:not(.active), #intel-hud.active .hud-top-left, #intel-hud.active .hud-top-right,
+  #intel-hud.active .hud-bottom-left, #intel-hud.active .hud-bottom-right,
+  #intel-hud.active .hud-left-edge, #intel-hud.active .hud-right-edge { opacity: 0 !important; visibility: hidden !important; }
+
+  #left-panel-stack { top: 28vh; bottom: 25vh; left: 22px; width: min(300px, 24vw); gap: 6px; }
+  #left-panel-stack > .panel-collapsible { width: 100%; }
+  #right-context-rail { top: 20vh; right: 22px; width: min(520px, 35vw); max-height: 52vh; }
+  #right-context-rail #global-context-panel:not(.collapsed) { max-height: 100%; }
+  #global-context-panel .global-context-panel-inner { padding: 14px 16px; }
+
+  #command-dock { left: 50%; bottom: 10px; width: min(760px, calc(100vw - 44px)); transform: translateX(-50%); }
+  #command-dock #gev-voice-control { min-width: 138px; max-width: 168px; }
+  #command-dock .gev-voice-error-tray { bottom: calc(100% + 8px); }
+  body:not(.ui-clean-view):not(.recording-mode) #cesium-credits { bottom: 12px; left: 22px; max-width: 220px; transform: scale(.78); transform-origin: left bottom; }
+}
+
+@media (orientation: landscape) and (max-height: 520px) {
+  #title-bar { top: 8px; left: 16px; }
+  #title-bar h1 { font-size: 15px; letter-spacing: 3px; }
+  #title-bar .title-logo { width: 32px; }
+  #title-bar .subtitle { display: none; }
+  #style-indicator { top: 10px; right: 16px; }
+  #style-indicator .indicator-value { font-size: 11px; }
+  #top-center-actions button { width: 40px; height: 40px; }
+  #left-panel-stack { top: 24vh; left: 16px; bottom: 28vh; width: min(250px, 23vw); }
+  #right-context-rail { top: 18vh; right: 16px; width: min(420px, 34vw); max-height: 54vh; }
+  #command-dock { bottom: 6px; width: calc(100vw - 32px); }
+}

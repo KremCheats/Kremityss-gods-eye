@@ -1,0 +1,11 @@
+node_modules/
+.expo/
+dist/
+*.log
+.env
+.env.*
+!.env.example
+
+# Generated native/output directories (Codemagic recreates these)
+ios/
+dist/

@@ -1,0 +1,41 @@
+workflows:
+  kremityss-ios:
+    name: Kremityss Live iOS
+    max_build_duration: 60
+    instance_type: mac_mini_m2
+    environment:
+      ios_signing:
+        distribution_type: app_store
+        bundle_identifier: com.kremityss.godseye
+      vars:
+        EXPO_PUBLIC_WEBSITE_URL: https://kremityss-gods-eye.manus.space
+      node: 22.13.0
+      xcode: latest
+      cocoapods: default
+    scripts:
+      - name: Install JavaScript dependencies
+        script: |
+          cd mobile
+          npm ci
+      - name: Generate the native iOS project
+        script: |
+          cd mobile
+          npx expo prebuild --platform ios --no-install --clean
+      - name: Apply Codemagic signing profiles
+        script: |
+          xcode-project use-profiles
+      - name: Build signed IPA
+        script: |
+          cd mobile
+          xcode-project build-ipa --workspace ios/KremityssLive.xcworkspace --scheme KremityssLive
+    artifacts:
+      - mobile/build/ios/ipa/*.ipa
+      - mobile/build/ios/archive/*.xcarchive
+      - /tmp/xcodebuild_logs/*.log
+    publishing:
+      email:
+        recipients:
+          - kremityss@gmail.com
+        notify:
+          success: true
+          failure: true

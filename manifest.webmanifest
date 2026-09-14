@@ -1,12 +1,12 @@
 {
-  "name": "Kremityss Live",
+  "name": "Kremityss Gods Eye View",
   "short_name": "Kremityss",
-  "description": "Kremityss live geospatial intelligence and public video feeds.",
+  "description": "Kremityss Gods Eye View is a cinematic live planet command center: explore aircraft, vessels, satellites, fires, earthquakes, public cameras, city infrastructure, and the signals shaping the world in one immersive 3D globe.",
   "start_url": "/",
   "display": "standalone",
   "background_color": "#07040f",
-  "theme_color": "#9b4dff",
-  "orientation": "any",
+  "theme_color": "#07040d",
+  "orientation": "landscape",
   "icons": [
     {
       "src": "/kremityss-logo.jpg",

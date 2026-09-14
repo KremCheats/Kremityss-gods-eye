@@ -36,8 +36,3 @@ workflows:
     artifacts:
       - $HOME/Library/Developer/Xcode/DerivedData/**/Build/**/*.app
       - /tmp/xcodebuild_logs/*.log
-    publishing:
-      email:
-        notify:
-          success: true
-          failure: true

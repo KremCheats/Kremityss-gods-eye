@@ -1,6 +1,10 @@
 /** Own rail measurement, layout scheduling and dock tray observation. */
 import { layoutLeftPanelRail, layoutRightPanelRail } from './panelRails.js';
 const COCKPIT_LAYOUT_SETTLE_MS = 240;
+const isCompactLandscapeViewport = () =>
+  typeof window !== 'undefined' &&
+  window.matchMedia?.('(orientation: landscape) and (max-height: 680px)')
+    .matches;
 /**
  * Fixed UI regions that can occupy the left accordion's vertical lane.
  * Rectangles are filtered at runtime for visibility and horizontal overlap,
@@ -295,6 +299,10 @@ export class PanelLayoutController {
 
   _syncRightPanelAdaptiveLayout() {
     if (this.destroyed) return;
+    // Compact landscape uses explicit CSS popout zones. The obstacle solver
+    // is desktop-oriented and can immediately undo a user's touch-opened
+    // panel when the viewport is only a few hundred CSS pixels tall.
+    if (isCompactLandscapeViewport()) return;
     layoutRightPanelRail({
       stack: this._rightPanelStack,
       obstacles: document.querySelectorAll(RIGHT_STACK_OBSTACLE_SELECTOR),
@@ -429,6 +437,7 @@ export class PanelLayoutController {
 
   _syncLeftPanelAdaptiveLayout() {
     if (this.destroyed) return;
+    if (isCompactLandscapeViewport()) return;
     layoutLeftPanelRail({
       stack: this._leftPanelStack,
       obstacles: document.querySelectorAll(LEFT_STACK_OBSTACLE_SELECTOR),

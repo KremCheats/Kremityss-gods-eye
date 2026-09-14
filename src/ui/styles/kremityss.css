@@ -207,3 +207,103 @@ button:active { transform: scale(0.97); }
   #right-context-rail { top: 18vh; right: 16px; width: min(420px, 34vw); max-height: 54vh; }
   #command-dock { bottom: 6px; width: calc(100vw - 32px); }
 }
+
+/* Touch landscape fix: the adaptive obstacle solver is intentionally bypassed
+   for this shallow viewport, so opening a panel produces a real popout instead
+   of a one-frame expansion followed by an automatic collapse. */
+@media (orientation: landscape) and (max-height: 680px) {
+  #left-panel-stack,
+  #right-context-rail {
+    z-index: 210;
+    overflow: visible;
+    pointer-events: none;
+  }
+
+  #left-panel-stack {
+    top: 22vh;
+    bottom: auto;
+    left: 22px;
+    right: auto;
+    width: min(420px, 34vw);
+    max-height: 56vh;
+  }
+
+  #right-context-rail {
+    top: 20vh;
+    right: 22px;
+    bottom: 24vh;
+    left: auto;
+    width: min(540px, 36vw);
+    max-height: 56vh;
+  }
+
+  #left-panel-stack > .panel-collapsible,
+  #right-context-rail > .panel-collapsible,
+  #right-context-rail > #pp-toggles {
+    position: relative;
+    width: 100%;
+    max-width: none;
+    margin-bottom: 8px;
+    pointer-events: auto;
+  }
+
+  #left-panel-stack > .panel-collapsible:not(.collapsed),
+  #right-context-rail > .panel-collapsible:not(.collapsed),
+  #right-context-rail > #pp-toggles:not(.collapsed) {
+    z-index: 230;
+    max-height: 52vh;
+    overflow: auto;
+    overscroll-behavior: contain;
+    -webkit-overflow-scrolling: touch;
+    background: rgba(8, 9, 18, .97);
+    box-shadow: 0 18px 48px rgba(0, 0, 0, .58), 0 0 0 1px rgba(184, 108, 255, .18);
+  }
+
+  #left-panel-stack > #data-panel:not(.collapsed) {
+    width: min(460px, 38vw);
+  }
+
+  #left-panel-stack > #data-panel:not(.collapsed) #data-toggles {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 6px;
+    max-height: 42vh;
+    overflow-y: auto;
+    padding-right: 3px;
+  }
+
+  .panel-collapse-btn,
+  .dock-tray-toggle,
+  #gev-voice-button {
+    touch-action: manipulation;
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  /* Keep voice out of the bottom dock's flex geometry. */
+  #command-dock > #gev-voice-control {
+    position: fixed;
+    right: 18px;
+    bottom: 16px;
+    z-index: 240;
+    width: min(188px, 18vw);
+    min-width: 168px;
+    height: 5.1rem;
+    margin: 0;
+    flex: none;
+    transform: none;
+    border-color: rgba(184, 108, 255, .46);
+    background: rgba(10, 8, 20, .98);
+    box-shadow: 0 14px 38px rgba(0, 0, 0, .6), 0 0 24px rgba(138, 64, 214, .18);
+  }
+
+  #command-dock > #gev-voice-control .gev-voice-error-tray {
+    bottom: calc(100% + 8px);
+  }
+}
+
+@media (orientation: landscape) and (max-height: 520px) {
+  #left-panel-stack { top: 20vh; left: 16px; width: min(360px, 36vw); }
+  #right-context-rail { top: 18vh; right: 16px; bottom: 26vh; width: min(460px, 38vw); }
+  #left-panel-stack > #data-panel:not(.collapsed) #data-toggles { grid-template-columns: 1fr; max-height: 38vh; }
+  #command-dock > #gev-voice-control { right: 14px; bottom: 10px; min-width: 154px; width: 17vw; transform: scale(.88); transform-origin: right bottom; }
+}

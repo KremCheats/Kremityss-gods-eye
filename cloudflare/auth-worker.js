@@ -34,7 +34,7 @@ const derivePassword = async (password, salt) => {
   const material = await crypto.subtle.importKey('raw', new TextEncoder().encode(password), 'PBKDF2', false, ['deriveBits']);
   // The random salt is already high-entropy base64url text. Keeping it as
   // UTF-8 avoids runtime-specific base64 decoding differences at the edge.
-  const bits = await crypto.subtle.deriveBits({ name: 'PBKDF2', salt: new TextEncoder().encode(salt), iterations: 120000, hash: 'SHA-256' }, material, 256);
+  const bits = await crypto.subtle.deriveBits({ name: 'PBKDF2', salt: new TextEncoder().encode(salt), iterations: 100000, hash: 'SHA-256' }, material, 256);
   return base64Url(new Uint8Array(bits));
 };
 

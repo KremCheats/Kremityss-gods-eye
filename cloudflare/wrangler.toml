@@ -1,0 +1,11 @@
+name = "kremityss-auth"
+main = "auth-worker.js"
+compatibility_date = "2026-09-14"
+
+[[kv_namespaces]]
+binding = "AUTH_KV"
+id = "74f609b7a7db4d8eaabe934a96f5faab"
+
+routes = [
+  { pattern = "auth.kremdevai.com/*", zone_name = "kremdevai.com" }
+]

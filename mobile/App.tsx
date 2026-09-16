@@ -1,4 +1,4 @@
-import { useMemo, useRef, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import {
   ActivityIndicator,
   Image,
@@ -15,8 +15,28 @@ import { WebView, type WebViewNavigation } from "react-native-webview";
 
 type AppState = "loading" | "ready" | "error";
 
-const DEFAULT_URL = "https://kremityss-gods-eye.manus.space";
+const DEFAULT_URL = "https://kremdevai.com";
 const KREMCHEATS_LOGO = require("./assets/kremcheats-logo.jpg");
+const PAGE_HANDSHAKE = `
+  (function () {
+    function report() {
+      var title = document.getElementById('title-bar');
+      var globe = document.getElementById('cesiumContainer');
+      window.ReactNativeWebView.postMessage(JSON.stringify({
+        type: 'kremityss-page-ready',
+        title: !!title,
+        globe: !!globe
+      }));
+    }
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', report, { once: true });
+    } else {
+      report();
+    }
+    setTimeout(report, 1500);
+  })();
+  true;
+`;
 
 function getWebsiteUrl() {
   const configured = process.env.EXPO_PUBLIC_WEBSITE_URL;
@@ -29,6 +49,13 @@ export default function App() {
   const [appState, setAppState] = useState<AppState>("loading");
   const [currentUrl, setCurrentUrl] = useState(getWebsiteUrl());
   const websiteUrl = useMemo(() => getWebsiteUrl(), []);
+
+  useEffect(() => {
+    const timeout = setTimeout(() => {
+      setAppState((state) => (state === "ready" ? state : "error"));
+    }, 15000);
+    return () => clearTimeout(timeout);
+  }, []);
 
   const retry = () => {
     setAppState("loading");
@@ -45,6 +72,17 @@ export default function App() {
 
   const onNavigationStateChange = (navigation: WebViewNavigation) => {
     setCurrentUrl(navigation.url || websiteUrl);
+  };
+
+  const onMessage = (event: { nativeEvent: { data: string } }) => {
+    try {
+      const message = JSON.parse(event.nativeEvent.data);
+      if (message.type === "kremityss-page-ready" && message.title && message.globe) {
+        setAppState("ready");
+      }
+    } catch {
+      // Ignore non-JSON messages from the hosted page.
+    }
   };
 
   return (
@@ -78,10 +116,15 @@ export default function App() {
           allowsInlineMediaPlayback
           mediaPlaybackRequiresUserAction={false}
           setSupportMultipleWindows={false}
+          originWhitelist={["https://*", "http://*"]}
+          cacheEnabled
+          incognito={false}
+          injectedJavaScript={PAGE_HANDSHAKE}
           onLoadStart={() => setAppState("loading")}
-          onLoadEnd={() => setAppState("ready")}
+          onLoadEnd={() => undefined}
           onError={() => setAppState("error")}
           onHttpError={() => setAppState("error")}
+          onMessage={onMessage}
           onNavigationStateChange={onNavigationStateChange}
           startInLoadingState
           renderLoading={() => <LoadingOverlay />}
@@ -91,7 +134,7 @@ export default function App() {
             <Text style={styles.errorEyebrow}>SIGNAL LOST</Text>
             <Text style={styles.errorTitle}>Kremityss is offline</Text>
             <Text style={styles.errorCopy}>
-              Check your connection, then re-establish the live globe feed.
+              The live Kremityss feed did not load from kremdevai.com. Check your connection and reconnect.
             </Text>
             <Pressable
               accessibilityLabel="Reload Kremityss Live"

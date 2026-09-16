@@ -5,7 +5,7 @@ workflows:
     instance_type: mac_mini_m2
     environment:
       vars:
-        EXPO_PUBLIC_WEBSITE_URL: https://kremityss-gods-eye.manus.space
+        EXPO_PUBLIC_WEBSITE_URL: https://kremdevai.com
       node: 22.13.0
       xcode: latest
       cocoapods: default

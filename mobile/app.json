@@ -24,7 +24,7 @@
       "bundler": "metro"
     },
     "extra": {
-      "websiteUrl": "https://kremityss-gods-eye.manus.space"
+      "websiteUrl": "https://kremdevai.com"
     },
     "plugins": [
       "expo-font"

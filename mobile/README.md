@@ -4,13 +4,13 @@ This Expo app preserves the existing Kremityss website and presents it in an iOS
 
 ## Configure the website URL
 
-The default URL is `https://kremityss-gods-eye.manus.space`. Override it for a deployment with:
+The default URL is `https://kremdevai.com`. Override it for a deployment with:
 
 ```bash
 EXPO_PUBLIC_WEBSITE_URL=https://your-live-domain.example npm run start
 ```
 
-For a permanent release URL, update `extra.websiteUrl` in `app.json` or set the environment variable during the EAS build.
+For a permanent release URL, update `extra.websiteUrl` in `app.json` or set the environment variable during the Codemagic build.
 
 ## Run locally
 
